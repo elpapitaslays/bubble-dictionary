@@ -1,0 +1,211 @@
+:root {
+  --bg-base: #101010;
+  --text: #f1f1f1;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+}
+
+body {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at top, #1c1c1c, var(--bg-base));
+  color: var(--text);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  perspective: 1000px;
+}
+
+#dot-background {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.auth-menu {
+  position: fixed;
+  top: 22px;
+  right: 22px;
+  z-index: 4;
+  width: 170px;
+  padding-bottom: 58px;
+  overflow: visible;
+}
+
+.auth-btn {
+  position: relative;
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.86rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.auth-btn--login {
+  z-index: 2;
+  background: rgba(235, 235, 235, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+}
+
+.auth-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 120%;
+  height: 220%;
+  transform: translate(-50%, -50%) scale(0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0.08) 36%, rgba(255, 255, 255, 0) 72%);
+  transition: opacity 220ms ease, transform 220ms ease;
+}
+
+.auth-btn:hover::after,
+.auth-btn:focus-visible::after {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.auth-btn--guest {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 33px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(0) scale(0.95);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08) 36%, rgba(255, 255, 255, 0.03) 62%, rgba(255, 255, 255, 0.1) 100%);
+  box-shadow:
+    inset -14px -18px 28px rgba(0, 0, 0, 0.18),
+    inset 10px 12px 16px rgba(255, 255, 255, 0.2),
+    0 16px 26px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  filter: blur(3px);
+  transition: transform 340ms cubic-bezier(0.2, 0.8, 0.2, 1), opacity 280ms ease, filter 340ms ease;
+}
+
+.auth-menu:hover .auth-btn--guest,
+.auth-menu:focus-within .auth-btn--guest {
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(49px) scale(1);
+  filter: blur(0);
+}
+
+#hero-bubble {
+  --size: 170px;
+  position: fixed;
+  width: var(--size);
+  height: var(--size);
+  left: 0;
+  top: 0;
+  z-index: 3;
+  border-radius: 50%;
+  pointer-events: auto;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background:
+    radial-gradient(circle at 50% 40%, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.08) 36%, rgba(255, 255, 255, 0.03) 62%, rgba(255, 255, 255, 0.1) 100%);
+  box-shadow:
+    inset -18px -25px 34px rgba(0, 0, 0, 0.2),
+    inset 14px 18px 22px rgba(255, 255, 255, 0.25),
+    0 24px 55px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  transform-style: preserve-3d;
+  will-change: transform;
+  opacity: 0.72;
+  cursor: grab;
+  touch-action: none;
+  overflow: hidden;
+}
+
+#hero-bubble.is-grabbing {
+  cursor: grabbing;
+}
+
+.bubble-face {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 72%;
+  text-align: center;
+  pointer-events: none;
+  color: rgba(255, 255, 255, 0.84);
+  font-size: 0.92rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: 0.04em;
+  overflow-wrap: anywhere;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  user-select: none;
+  transition: transform 280ms ease, filter 280ms ease, opacity 280ms ease;
+}
+
+.bubble-face--front {
+  transform: translate(-50%, -50%) rotateY(0deg);
+  text-transform: lowercase;
+  opacity: 0.92;
+  filter: blur(0);
+}
+
+.bubble-face--back {
+  transform: translate(-50%, -50%) rotateY(180deg);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+  opacity: 0.22;
+  filter: blur(1.2px);
+}
+
+#hero-bubble.is-flipped .bubble-face--front {
+  opacity: 0.22;
+  filter: blur(1.2px);
+}
+
+#hero-bubble.is-flipped .bubble-face--back {
+  opacity: 0.9;
+  filter: blur(0.45px);
+}
+
+.dot {
+  position: absolute;
+  border-radius: 999px;
+  transform-origin: center;
+  will-change: transform;
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.content h1 {
+  margin: 0;
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  letter-spacing: 0.05em;
+  opacity: 0.9;
+}
